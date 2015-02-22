@@ -1,0 +1,36 @@
+---
+ssh_known_hosts_command: "ssh-keyscan -H -T 10"
+ssh_known_hosts_file: "/etc/ssh/ssh_known_hosts"
+ssh_known_hosts:
+  - github.com
+  - bitbucket.org
+
+virtualbox:
+  guest_additions:
+    version: 4.3.20
+    iso_url: http://download.virtualbox.org/virtualbox/4.3.20/VBoxGuestAdditions_4.3.20.iso
+    iso_checksum: 9ab48f44ac26a6deb374cb5fe6bad103bbf4fdf5186140e2d40ebe48bd01f3ea
+    iso_dir: /tmp
+    iso_mountdir: /mnt
+
+rbenv:
+  # TODO: Replace deploy_user with corresponding Ansible prop
+  user: vagrant
+  ruby_version: 2.2.0
+
+# Cribbed from https://gist.github.com/brendan-skyrkt/7699067
+# Environment variables to help call rbenv while sudo
+rbenv_root: "~{{ rbenv.user }}/.rbenv"
+rbenv_env: "RBENV_ROOT={{ rbenv_root }} PATH={{ rbenv_root }}/shims:{{ rbenv_root }}/bin:$PATH"
+rbenv_bin: "{{ rbenv_env }} rbenv"
+
+nvm:
+  user: vagrant
+  version: v0.23.3
+  node_version: '0.10'
+
+devtools:
+  utilities:
+    - { url: "https://raw.github.com/funtoo/keychain/master/keychain.sh", alias: "keychain" }
+    - { url: "http://beyondgrep.com/ack-2.14-single-file", alias: "ack" }
+    - { url: "https://raw.githubusercontent.com/rupa/z/master/z.sh", alias: "z" }

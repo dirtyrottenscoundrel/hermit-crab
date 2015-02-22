@@ -1,0 +1,14 @@
+---
+  - name: "nodejs | install nvm depends"
+    sudo: yes
+    apt: pkg={{ item }} state=present
+    with_items:
+      - libssl-dev
+
+  - name: "nodejs | install nvm"
+    git: repo=https://github.com/creationix/nvm.git dest=~/.nvm version={{ nvm.version }}
+
+  - name: "nodejs | install node and set version"
+    shell: >
+      /bin/bash -c "source ~/.nvm/nvm.sh && nvm install {{ nvm.node_version }} && nvm alias default {{ nvm.node_version }}"
+      creates=/home/{{ nvm.user }}/.nvm/alias

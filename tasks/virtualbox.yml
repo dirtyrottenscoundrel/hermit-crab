@@ -1,0 +1,32 @@
+---
+  - name: "virtualbox | virtualbox dependencies present"
+    sudo: yes
+    apt: package={{ item }} state=present
+    with_items:
+      - "linux-headers-{{ ansible_kernel }}"
+      - dkms
+      - linux-headers-generic
+
+  - name: "virtualbox | download virtualbox guest additions iso"
+    get_url:
+      url={{ virtualbox.guest_additions.iso_url }}
+      dest={{ virtualbox.guest_additions.iso_dir }}/VBoxGuestAdditions_{{ virtualbox.guest_additions.version }}.iso
+      sha256sum={{ virtualbox.guest_additions.iso_checksum }}
+
+  - name: "virtualbox | ensure mount dir exists"
+    file: path={{ virtualbox.guest_additions.iso_mountdir }}/VBoxGuestAdditions_{{ virtualbox.guest_additions.version }} state=directory
+
+  - name: "virtualbox | mount virtualbox guest additions iso"
+    sudo: yes
+    command: mount {{ virtualbox.guest_additions.iso_dir }}/VBoxGuestAdditions_{{ virtualbox.guest_additions.version }}.iso -o loop {{ virtualbox.guest_additions.iso_mountdir }}/VBoxGuestAdditions_{{ virtualbox.guest_additions.version }}
+    register: virtualbox_guest_additions_mounted
+
+  - name: "virtualbox | virtualbox guest additions present"
+    sudo: yes
+    shell: "{{ virtualbox.guest_additions.iso_mountdir }}/VBoxGuestAdditions_{{ virtualbox.guest_additions.version }}/VBoxLinuxAdditions.run -- --force creates=/lib/modules/{{ ansible_kernel }}/updates/dkms/vboxguest.ko"
+    ignore_errors: yes
+
+  - name: "virtualbox | umount virtualbox guest additions iso"
+    sudo: yes
+    shell: umount {{ virtualbox.guest_additions.iso_mountdir }}/VBoxGuestAdditions_{{ virtualbox.guest_additions.version }} removes={{ virtualbox.guest_additions.iso_mountdir }}/VBoxGuestAdditions_{{ virtualbox.guest_additions.version }}
+    when: virtualbox_guest_additions_mounted.changed

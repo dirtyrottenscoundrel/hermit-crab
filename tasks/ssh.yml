@@ -1,0 +1,18 @@
+---
+  # Credit to this great post:
+  # https://juriansluiman.nl/article/151/managing-ssh-known-hosts-with-ansible
+  - name: "ssh | ensure known hosts file exists"
+    sudo: yes
+    file: "path={{ ssh_known_hosts_file }} state=touch"
+
+  - name: "ssh | check host name availability"
+    shell: "ssh-keygen -f {{ ssh_known_hosts_file }} -F {{ item }}"
+    with_items: ssh_known_hosts
+    register: ssh_known_host_results
+    ignore_errors: yes
+
+  - name: "ssh | scan the public key"
+    sudo: yes
+    shell: "{{ ssh_known_hosts_command}} {{ item.item }} >> {{ ssh_known_hosts_file }}"
+    with_items: ssh_known_host_results.results
+    when: item.stdout == ""

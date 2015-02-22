@@ -1,0 +1,45 @@
+---
+- name: "ruby | install rbenv and ruby-build depends"
+  sudo: yes
+  apt: pkg={{ item }} state=present
+  with_items:
+    - autoconf
+    - bison
+    - libffi-dev
+    - libpq-dev
+    - libssl-dev
+    - libyaml-dev
+    - libreadline6
+    - libreadline6-dev
+    - zlib1g
+    - zlib1g-dev
+
+- name: "ruby | clone rbenv repo"
+  git: repo=git://github.com/sstephenson/rbenv.git dest=~{{ rbenv.user }}/.rbenv
+
+- name: "ruby | install ruby-build as rbenv plugin"
+  git: repo=git://github.com/sstephenson/ruby-build.git dest={{ rbenv_root }}/plugins/ruby-build
+
+- name: "ruby | install rbenv-binstubs as rbenv plugin"
+  git: repo=https://github.com/ianheggie/rbenv-binstubs.git  dest={{ rbenv_root }}/plugins/rbenv-binstubs
+
+- name: "ruby | check if ruby is installed"
+  shell: "{{ rbenv_bin }} versions | grep {{ rbenv.ruby_version }}"
+  register: ruby_installed
+  ignore_errors: yes
+
+- name: "ruby | install ruby"
+  shell: "{{rbenv_bin }} install {{ rbenv.ruby_version }}"
+  when: ruby_installed|failed
+
+- name: "ruby | set default ruby version"
+  shell: "{{rbenv_bin }} global {{ rbenv.ruby_version }}"
+  when: ruby_installed|failed
+
+- name: "ruby | install bundler gem"
+  shell: "{{ rbenv_env }} gem install bundler"
+  when: ruby_installed|failed
+
+- name: "ruby | rbenv rehash"
+  shell: "{{ rbenv_bin }} rehash"
+  when: ruby_installed|failed

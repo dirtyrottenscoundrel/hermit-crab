@@ -1,0 +1,52 @@
+---
+- name: "provision a dev home away from home"
+  hosts: all
+  remote_user: vagrant
+
+  tasks:
+    - name: "apt-get update if it has been more than an hour"
+      sudo: yes
+      apt: update_cache=yes cache_valid_time=3600
+
+    - name: "install common packages"
+      sudo: yes
+      apt: pkg={{ item }} state=present
+      with_items:
+        - avahi-daemon
+        - build-essential
+        - chromium-browser
+        - curl
+        - emacs24-nox
+        - firefox
+        - git
+        - htop
+        - mercurial
+        - ntp
+        - tree
+        - vim-nox
+        - wget
+
+    - name: "set timezone variables"
+      sudo: yes
+      copy: content='America/Chicago' dest=/etc/timezone owner=root group=root mode=0644
+      notify:
+        - update timezone
+
+    - name: "start avahi-daemon/ntp on boot"
+      sudo: yes
+      service: name={{ item }} state=started enabled=yes
+      with_items:
+        - avahi-daemon
+        - ntp
+
+    - include: tasks/ssh.yml
+    - include: tasks/minimal-gnome.yml
+    - include: tasks/virtualbox.yml
+    - include: tasks/ruby.yml
+    - include: tasks/nodejs.yml
+    - include: tasks/dev-tools.yml
+
+  handlers:
+    - name: update timezone
+      sudo: yes
+      command: dpkg-reconfigure --frontend noninteractive tzdata

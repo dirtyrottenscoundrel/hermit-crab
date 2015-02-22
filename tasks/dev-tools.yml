@@ -1,0 +1,29 @@
+---
+  - name: "devtools | creates ~/{bin,code}"
+    file: path=/home/vagrant/{{ item }} state=directory
+    with_items:
+      - bin
+      - code
+
+  - name: "devtools | download utility belt"
+    get_url: url={{ item.url }} dest=/home/vagrant/bin/{{ item.alias }}
+    with_items: devtools.utilities
+
+  - name: "devtools | make tools executable"
+    file: path=/home/vagrant/bin/{{ item.alias }} state=touch mode="u+x"
+    with_items: devtools.utilities
+
+  - name: "devtools | pull dotfiles"
+    hg: repo=https://bitbucket.org/dirtyrottenscoundrel/dotfiles dest=/home/vagrant/code/dotfiles
+
+  - name: "devtools | install bash_precmd"
+    get_url: url=https://raw.githubusercontent.com/rcaloras/bash-preexec/master/bash-preexec.sh dest=/home/vagrant/.bash_preexec
+
+  - name: "devtools | make bash_precmd executable"
+    file: path=/home/vagrant/.bash_preexec state=touch mode="u+x"
+
+  - name: "devtools | install effuse gem"
+    shell: "{{ rbenv_env }} gem install effuse"
+
+  - name: "devtools | rbenv rehash"
+    shell: "{{ rbenv_bin }} rehash"
