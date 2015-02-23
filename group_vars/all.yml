@@ -34,3 +34,4 @@ devtools:
     - { url: "https://raw.github.com/funtoo/keychain/master/keychain.sh", alias: "keychain" }
     - { url: "http://beyondgrep.com/ack-2.14-single-file", alias: "ack" }
     - { url: "https://raw.githubusercontent.com/rupa/z/master/z.sh", alias: "z" }
+    - { url: "https://github.com/boot-clj/boot/releases/download/2.0.0-rc9/boot.sh", alias: "boot" }
