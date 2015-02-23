@@ -1,0 +1,16 @@
+---
+  - name: "java | add ppa for java 8"
+    sudo: yes
+    apt_repository: repo='ppa:webupd8team/java'
+
+  - name: "java | accept license"
+    sudo: yes
+    shell:  echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections;
+  
+  - name: "java | install java 8"
+    sudo: yes
+    apt: pkg=oracle-java8-installer state=present
+  
+  - name: "java | set java 8 as default"
+    sudo: yes
+    command: update-java-alternatives -s java-8-oracle
