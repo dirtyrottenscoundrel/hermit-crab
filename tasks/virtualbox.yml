@@ -14,11 +14,12 @@
       sha256sum={{ virtualbox.guest_additions.iso_checksum }}
 
   - name: "virtualbox | ensure mount dir exists"
+    sudo: yes
     file: path={{ virtualbox.guest_additions.iso_mountdir }}/VBoxGuestAdditions_{{ virtualbox.guest_additions.version }} state=directory
 
   - name: "virtualbox | mount virtualbox guest additions iso"
     sudo: yes
-    command: mount {{ virtualbox.guest_additions.iso_dir }}/VBoxGuestAdditions_{{ virtualbox.guest_additions.version }}.iso -o loop {{ virtualbox.guest_additions.iso_mountdir }}/VBoxGuestAdditions_{{ virtualbox.guest_additions.version }}
+    command: mount -o loop {{ virtualbox.guest_additions.iso_dir }}/VBoxGuestAdditions_{{ virtualbox.guest_additions.version }}.iso {{ virtualbox.guest_additions.iso_mountdir }}/VBoxGuestAdditions_{{ virtualbox.guest_additions.version }}
     register: virtualbox_guest_additions_mounted
 
   - name: "virtualbox | virtualbox guest additions present"
