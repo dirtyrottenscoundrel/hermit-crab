@@ -27,3 +27,6 @@
 
   - name: "devtools | rbenv rehash"
     shell: "{{ rbenv_bin }} rehash"
+  
+  - name: "devtools | symlink dotfiles"
+    shell: "{{ rbenv_env }} effuse -y -- chdir=/home/vagrant/code/dotfiles"
