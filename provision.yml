@@ -42,10 +42,14 @@
 
     - include: tasks/ssh.yml
     - include: tasks/minimal-lubuntu.yml
+      tags: [xorg,lubuntu]
     - include: tasks/virtualbox.yml
     - include: tasks/ruby.yml
+      tags: [ruby]
     - include: tasks/nodejs.yml
+      tags: [nodejs]
     - include: tasks/java.yml
+      tags: [java]
     - include: tasks/dev-tools.yml
 
   handlers:

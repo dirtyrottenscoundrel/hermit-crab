@@ -44,7 +44,7 @@ username/password `vagrant:vagrant` on the login screen. Alternately, use
 
 - [ ] Add project repository list to pull on provision
 - [ ] Extract more configuration to vars
-- [ ] Add Ansible tags to toggle package configuration from the Vagrantfile
+- [x] Add Ansible tags to toggle package configuration
 - [ ] Make it easy to share SSH keys from host
 - [ ] Enable unattended security updates
 - [ ] Investigate alternate desktop environments
