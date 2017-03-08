@@ -24,6 +24,8 @@ Vagrant.configure(2) do |config|
     vb.cpus = "2"
   end
 
+  config.ssh.forward_agent = true
+
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "provision.yml"
     ansible.limit = "all"
