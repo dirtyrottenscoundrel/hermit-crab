@@ -40,7 +40,7 @@
         - ntp
 
     - include: tasks/ssh.yml
-    - include: tasks/minimal-gnome.yml
+    - include: tasks/minimal-lubuntu.yml
     - include: tasks/virtualbox.yml
     - include: tasks/ruby.yml
     - include: tasks/nodejs.yml

@@ -1,0 +1,8 @@
+---
+  - name: 'desktop | install minimal lubuntu desktop'
+    sudo: yes
+    apt: pkg={{ item }} state=present
+    with_items:
+      - xorg
+      - lubuntu-core
+      - lubuntu-default-session

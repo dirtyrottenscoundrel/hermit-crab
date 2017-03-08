@@ -19,7 +19,7 @@ another's tastes.
 
 - Ubuntu 14.04 Server LTS
 - Dirt simple Ansible scripts written with a single user/machine in mind
-- Minimal Gnome 3 desktop
+- Minimal Lubuntu desktop
 - VirtualBox Guest Additions
 - Avahi to register itself on LAN at `hermit.local`
 - Ruby, NodeJS, and Java 8 runtimes
