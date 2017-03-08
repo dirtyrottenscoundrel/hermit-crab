@@ -14,7 +14,7 @@
     with_items: devtools.utilities
 
   - name: "devtools | pull dotfiles"
-    hg: repo=https://bitbucket.org/dirtyrottenscoundrel/dotfiles dest=/home/vagrant/code/dotfiles force=no
+    hg: repo=https://bitbucket.org/tvjg/dotfiles dest=/home/vagrant/code/dotfiles force=no
 
   - name: "devtools | install bash_precmd"
     get_url: url=https://raw.githubusercontent.com/rcaloras/bash-preexec/master/bash-preexec.sh dest=/home/vagrant/.bash_preexec

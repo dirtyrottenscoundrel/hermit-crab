@@ -29,7 +29,7 @@ another's tastes.
 
 ## Usage
 
-    $ git clone https://github.com/dirtyrottenscoundrel/hermit-crab
+    $ git clone https://github.com/tvjg/hermit-crab
     $ cd hermit-crab
     $ vagrant up
 
