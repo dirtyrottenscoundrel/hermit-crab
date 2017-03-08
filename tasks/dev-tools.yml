@@ -16,17 +16,5 @@
   - name: "devtools | pull dotfiles"
     hg: repo=https://bitbucket.org/tvjg/dotfiles dest=/home/vagrant/code/dotfiles force=no
 
-  - name: "devtools | install bash_precmd"
-    get_url: url=https://raw.githubusercontent.com/rcaloras/bash-preexec/master/bash-preexec.sh dest=/home/vagrant/.bash_preexec
-
-  - name: "devtools | make bash_precmd executable"
-    file: path=/home/vagrant/.bash_preexec state=touch mode="u+x"
-
-  - name: "devtools | install effuse gem"
-    shell: "{{ rbenv_env }} gem install effuse"
-
-  - name: "devtools | rbenv rehash"
-    shell: "{{ rbenv_bin }} rehash"
-  
   - name: "devtools | symlink dotfiles"
-    shell: "{{ rbenv_env }} effuse -y -- chdir=/home/vagrant/code/dotfiles"
+    shell: "/home/vagrant/code/dotfiles/install"
