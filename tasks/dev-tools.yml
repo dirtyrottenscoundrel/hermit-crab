@@ -14,7 +14,8 @@
     with_items: devtools.utilities
 
   - name: "devtools | pull dotfiles"
-    hg: repo=https://bitbucket.org/tvjg/dotfiles dest=/home/vagrant/code/dotfiles force=no
+    git: repo=https://github.com/tvjg/dotfiles.git dest=/home/vagrant/code/dotfiles force=no
 
   - name: "devtools | symlink dotfiles"
     shell: "/home/vagrant/code/dotfiles/install"
+    ignore_errors: yes
