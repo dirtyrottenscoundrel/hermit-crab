@@ -17,9 +17,9 @@ another's tastes.
 
 ## Provides
 
-- Ubuntu 14.04 Server LTS
+- Debian 8 "Jessie"
 - Dirt simple Ansible scripts written with a single user/machine in mind
-- Minimal Lubuntu desktop
+- Minimal i3-wm
 - VirtualBox Guest Additions
 - Avahi to register itself on LAN at `hermit.local`
 - Ruby, NodeJS, and Java 8 runtimes

@@ -1,16 +1,22 @@
 ---
   - name: "java | add ppa for java 8"
     sudo: yes
-    apt_repository: repo='ppa:webupd8team/java'
+    apt_repository: repo='deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main'
+
+  - name: "java | add key server for java 8"
+    sudo: yes
+    apt_key:
+      keyserver: keyserver.ubuntu.com
+      id: EEA14886
 
   - name: "java | accept license"
     sudo: yes
     shell:  echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections;
-  
+
   - name: "java | install java 8"
     sudo: yes
-    apt: pkg=oracle-java8-installer state=present
-  
+    apt: pkg=oracle-java8-installer state=present update_cache=yes
+
   - name: "java | set java 8 as default"
     sudo: yes
     command: update-java-alternatives -s java-8-oracle

@@ -3,9 +3,8 @@
     sudo: yes
     apt: package={{ item }} state=present
     with_items:
-      - "linux-headers-{{ ansible_kernel }}"
+      - linux-headers-amd64
       - dkms
-      - linux-headers-generic
 
   - name: "virtualbox | download virtualbox guest additions iso"
     get_url:

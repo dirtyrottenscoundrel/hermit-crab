@@ -14,10 +14,9 @@
       with_items:
         - avahi-daemon
         - build-essential
-        - chromium-browser
         - curl
         - emacs24-nox
-        - firefox
+        - firefox-esr
         - git
         - htop
         - mercurial
@@ -42,7 +41,9 @@
 
     - include: tasks/ssh.yml
     - include: tasks/minimal-lubuntu.yml
-      tags: [xorg,lubuntu]
+      tags: [xorg,lxde]
+    - include: tasks/i3-wm.yml
+      tags: [xorg,i3-wm]
     - include: tasks/virtualbox.yml
     - include: tasks/ruby.yml
       tags: [ruby]
