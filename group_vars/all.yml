@@ -27,7 +27,7 @@ rbenv_bin: "{{ rbenv_env }} rbenv"
 nvm:
   user: vagrant
   version: v0.23.3
-  node_version: '0.10'
+  node_version: '6'
 
 devtools:
   utilities:
